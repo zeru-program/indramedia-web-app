@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('percentage');
             $table->date('start_date');
             $table->date('end_date');
-            $table->boolean('status')->default(true);
+            $table->enum('status', ['draft', 'active'])->default("draft");
             $table->timestamps();
             $table->foreign('sku')->references('sku')->on('products')->onDelete('cascade');
         });

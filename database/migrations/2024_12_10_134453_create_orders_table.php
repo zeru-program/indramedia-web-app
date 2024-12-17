@@ -29,7 +29,7 @@ return new class extends Migration
             $table->decimal('product_price_discount')->nullable();         $table->decimal('product_percentage_discount')->nullable();
             $table->decimal('product_price_totals'); $table->string('product_payment_method')->default("cod"); 
             $table->string('product_delivery')->default("cod");
-            $table->enum('status' ['pending', 'waiting payment', ''])->default("pending");
+            $table->enum('status', ['pending', 'waiting payment', 'preparing', 'shipping', 'ready taken', 'success'])->default("pending");
             $table->timestamps();
         });
     }

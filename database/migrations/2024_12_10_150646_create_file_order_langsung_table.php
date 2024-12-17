@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('file_order_langsung', function (Blueprint $table) {
             $table->id();
-            $table->string('order_id')->unique(); $table->string('file_amount');
+            $table->string('order_id_langsung', 255)->unique(); 
+            $table->string('file_amount');
             $table->string('file_path_1');
-            $table->string('file_path_2')->nullable(); $table->string('file_path_3')->nullable(); $table->string('file_path_4')->nullable(); $table->string('file_path_5')->nullable();
+            $table->string('file_path_2')->nullable(); 
+            $table->string('file_path_3')->nullable(); 
+            $table->string('file_path_4')->nullable(); 
+            $table->string('file_path_5')->nullable();
             $table->timestamps();
-                     $table->foreign('order_id')->references('order_id')->on('orders_langsung')->onDelete('cascade');
+
         });
     }
 

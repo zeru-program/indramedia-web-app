@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders_langsung', function (Blueprint $table) {
             $table->id();
-            $table->string('order_id')->unique();
+            $table->string('order_id_langsung', 255)->unique();
             $table->string('order_name');
             $table->string('order_phone');
             $table->text('order_message')->nullable();
@@ -22,7 +22,9 @@ return new class extends Migration
             $table->string('product_type');
             $table->string('product_category');
             $table->string('product_brand');
-            $table->boolean('order_is_file')->default(false); $table->decimal('product_price_totals'); $table->string('status')->default("pending");
+            $table->boolean('order_is_file')->default(false); 
+            $table->decimal('product_price_totals'); 
+            $table->enum('status', ['pending', 'waiting payment', 'preparing', 'shipping', 'ready taken', 'success'])->default("pending");
             $table->timestamps();
         });
     }

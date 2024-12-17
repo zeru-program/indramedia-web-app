@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('method');
             $table->string('image_path')->nullable();
             $table->string('rekening')->nullable();
-           
-            $table->string('location')->default("indramedia store")->; $table->boolean('status')->default(true);
+            $table->string('location')->default("indramedia store"); $table->enum('status', ['active', 'draft',])->default("draft");
             $table->timestamps();
         });
     }

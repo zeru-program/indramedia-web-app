@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->boolean('is_populer')->default(false);
             $table->boolean('is_featured')->default(false); $table->boolean('is_promo')->default(false);
-            $table->string('status')->default("active");
+            $table->enum('status', ['draft', 'active'])->default("active");
             $table->timestamps();
         });
     }

@@ -41,14 +41,13 @@
               </ul>
             </div>
             <div class="col-lg-4 col-md-6 mb-lg-0 mb-0">
-              <h6 class="text-uppercase font-weight-bold mb-4">Registered Office Address</h6>
-              <p class="text-light mb-4">Here , write the complete address of the Registered office address along with telephone number.</p>
+              <h6 class="text-uppercase font-weight-bold mb-4">Alamat Kantor Kami</h6>
+              <p class="text-light mb-4">Jl. Kp. Buntar, RT.02/RW.08, Muarasari, Kec. Bogor Sel., Kota Bogor, Jawa Barat 16137.</p>
               <ul class="list-inline mt-4">
-                <li class="list-inline-item"><a href="#" target="_blank" title="twitter"><i class="fab  fa-2x bi-twitter"></i></a></li>
-                <li class="list-inline-item"><a href="#" target="_blank" title="facebook"><i class="fab fa-2x bi-facebook-f"></i></a></li>
-                <li class="list-inline-item"><a href="#" target="_blank" title="instagram"><i class="fab fa-2x bi-instagram"></i></a></li>
-                <li class="list-inline-item"><a href="#" target="_blank" title="pinterest"><i class="fab fa-2x bi-youtube"></i></a></li>
-                <li class="list-inline-item"><a href="#" target="_blank" title="vimeo"><i class="fab fa-2x bi-google"></i></a></li>
+                <li class="list-inline-item text-light"><a href="wa.me/+6282320381992" target="_blank" title="twitter"><i class="fab text-light fa-2x bi-whatsapp"></i></a></li>
+                <li class="list-inline-item text-light"><a href="https://www.instagram.com/bukusekolahan.id" target="_blank" title="instagram"><i class="fab text-light fa-2x bi-instagram"></i></a></li>
+                <li class="list-inline-item text-light"><a href="https://www.youtube.com/@indramediadigital7749" target="_blank" title="pinterest"><i class="fab text-light fa-2x bi-youtube"></i></a></li>
+                <li class="list-inline-item text-light"><a href="" target="_blank" title="shoppe" class="mt-0" ><img style="margin-top: -8px" src="{{ asset("images/shopee.svg") }}" alt=""></a></li>
               </ul>
             </div>
           </div>

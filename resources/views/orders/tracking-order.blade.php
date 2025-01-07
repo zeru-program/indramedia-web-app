@@ -30,7 +30,7 @@
         </div>
         <div class="d-flex flex-column justify-content-center content-header-2">
           <h0 class="fw-b" id="">Lacak Pesanan Mu</h0>
-          <input type="number" name="id" class="form-control mb-2 " placeholder="masukan id pesanan.." id="order_id" required>
+          <input type="text" name="id" class="form-control my-4 " placeholder="masukan id pesanan.." id="order_id" required>
           <div class="d-flex gap-3">
           <button class="btn-home-outline text-decoration-none px-4 py-2 align-items-center justify-content-center d-flex" type="button" onclick="handleTrack()"><span>Lacak</span><i class="bi-arrow-right mx-2"></i></button>
           </div>

@@ -35,11 +35,11 @@
         <section class="container pt-5">
             <div class="d-flex justify-content-center align-items-center flex-row gap-3">
               <div class="hr-text"></div>
-                <h1 class="fw-bold m-0">Artikel Kami</h1>
+                <h1 class="fw-bold m-0 wow fadeInUp" data-wow-delay=".7s">Artikel Kami</h1>
               <div class="hr-text"></div>
             </div>
             <div class="contain-div-produk">
-            <div class="accordion accordion-produk mt-3" id="accordionExample">
+            <div class="accordion accordion-produk mt-3 wow fadeInUp" data-wow-delay=".7s" id="accordionExample">
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">

@@ -26,7 +26,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde nihil illo nam dignissimos. Quasi harum, hic placeat perspiciatis excepturi eligendi vitae obcaecati vero quis sapiente aliquid, corrupti, quisquam dolorum dignissimos.</p>
             </div>
             </div>
-            <div class="contain-visi-misi w-100 bg-dark py-4 mt-5">
+            <div class="contain-visi-misi w-100 bg-dark mt-5" style="padding-block: 100px">
                 <div class="container mb-4 text-center">
                 <div class="d-flex justify-content-center mb-1 align-items-center flex-row gap-3">
                   <div class="hr-text"></div>

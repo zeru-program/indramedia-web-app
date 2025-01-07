@@ -39,9 +39,18 @@
                 </div>
             </div>
             <hr>
-            <form action="{{ route('produk.checkout.create') }}" method="POST" class="mt-2">
+            <form action="{{ route('produk.checkout.create') }}" enctype="multipart/form-data" method="POST" class="mt-2">
                 @csrf
                 <div class="row col-md-12">
+                    @if ($order_is_file == 1)
+                        @for ($i = 0; $i < $order_qty; $i++)
+                            <div class="mb-2 col-md-12">
+                                <label for="order_file{{ $i + 1 }}">File order {{ $i + 1 }}</label>
+                                <input type="file" name="order_file{{ $i + 1 }}" accept="image/png, image/gif, image/jpeg" required class="form-control" id="">
+                                <span class="text-danger">Silakan input file {{ $i + 1 }}</span>
+                            </div>
+                        @endfor
+                    @endif
                     <div class="mb-2 col-md-12">
                         <label for="order_produk">Nama produk</label>
                         <input type="text" name="order_product" placeholder="" value="{{ $order_product }}" required disabled class="form-control" id="">
@@ -60,28 +69,24 @@
                 <div class="row col-md-12">
                     <div class="mb-2 col-md-12">
                         <label for="order_note">Catatan</label>
-                        <textarea name="order_note" id="" class="form-control" cols="5" disabled value="{{ $order_note }}" rows="5" placeholder="masukan pesan/catatan mu untuk penjual.. (maksimal 200 kata)" maxlength="200"></textarea>
-                    </div>
-                    <div class="mb-2 col-md-12">
-                        <label for="order_files">File produk (bisa lebih dari 1)</label>
-                        <input type="file" name="order_files[]" multiple class="form-control" disabled id="">
+                        <textarea name="order_note" class="form-control" cols="5" rows="5" disabled placeholder="masukan pesan/catatan mu untuk penjual.. (maksimal 200 kata)" maxlength="200">{{ $order_note }}</textarea>
                     </div>
                 </div>
                 <div class="row col-md-12">
                     <div class="mb-2 col-md-6">
                         <label for="order_qty">Jumlah produk</label>
-                        <select name="order_qty" class="form-control" required disabled value="{{ $order_qty }}" id="">
-                            <option value="1">X1</option>
-                            <option value="2">X2</option>
-                            <option value="3">X3</option>
-                            <option value="4">X4</option>
-                            <option value="5">X5</option>
-                        </select>
+                        <select name="order_qty" class="form-control" required disabled>
+                            <option value="1" {{ $order_qty == 1 ? 'selected' : '' }}>X1</option>
+                            <option value="2" {{ $order_qty == 2 ? 'selected' : '' }}>X2</option>
+                            <option value="3" {{ $order_qty == 3 ? 'selected' : '' }}>X3</option>
+                            <option value="4" {{ $order_qty == 4 ? 'selected' : '' }}>X4</option>
+                            <option value="5" {{ $order_qty == 5 ? 'selected' : '' }}>X5</option>
+                        </select>                        
                     </div>
                     <div class="mb-2 col-md-6">
                         <label for="order_delivery">Pengiriman</label>
                         <select name="order_delivery" class="form-control" required disabled value="{{ $order_delivery }}" disabled id="">
-                            <option value="ambil_ditempat">Ambil ditempat</option>
+                            <option value="ambil_ditempat" {{ $order_delivery === "ambil_ditempat" ? 'selected' : '' }}>Ambil ditempat</option>
                         </select>
                     </div>
                  </div>
@@ -89,7 +94,7 @@
                     <div class="col-md-12">
                         <label for="order_payment">Motede Pembayaran</label>
                         <select name="order_payment" class="form-control" required value="{{ $order_payment }}" disabled id="">
-                            <option value="cod">COD (di Indramedia store)</option>
+                            <option value="cod" {{ $order_payment === "cod" ? 'selected' : '' }}>COD (di Indramedia store)</option>
                         </select>
                     </div>
                 </div>
@@ -98,22 +103,8 @@
                     <input type="hidden" name="order_product" value="{{ $order_product }}">
                     <input type="hidden" name="order_name" value="{{ $order_name }}">
                     <input type="hidden" name="order_phone" value="{{ $order_phone }}">
+                    <input type="hidden" name="order_is_file" value="{{ $order_is_file }}">
                     <input type="hidden" name="order_note" value="{{ $order_note }}">
-                    @if(!empty($order_files))
-                    @foreach($order_files as $file)
-                        <div class="file-input-wrapper">
-                            <label>File yang sudah diunggah:</label>
-                            <span>{{ $file['file_name'] }}</span> {{-- Nama file dari server --}}
-                            <input type="hidden" name="existing_files[]" value="{{ $file['file_path'] }}"> {{-- Path file untuk referensi --}}
-                            
-                            <label for="order_file_{{ $loop->index }}">Ganti file:</label>
-                            <input type="file" name="order_files[{{ $loop->index }}]" id="order_file_{{ $loop->index }}">
-                        </div>
-                    @endforeach
-                @else
-                    <input type="file" name="order_files[]">
-                @endif
-
                     <input type="hidden" name="order_qty" value="{{ $order_qty }}">
                     <input type="hidden" name="order_delivery" value="{{ $order_delivery }}">
                     <input type="hidden" name="order_payment" value="{{ $order_payment }}">

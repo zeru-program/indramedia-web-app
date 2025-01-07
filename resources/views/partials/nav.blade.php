@@ -50,10 +50,10 @@
             @auth
             <li class="nav-item dropdown">
               <a class="nav-link gap-4 text-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi-person-fill"></i><span style="margin-left:3px">Hai, User</span>
+                <i class="bi-person-fill"></i><span style="margin-left:3px">Hai, {{ Auth::user()->username }}</span>
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('akun') }}">Kelola Akun</a></li>
+                {{-- <li><a class="dropdown-item" href="{{ route('akun') }}">Kelola Akun</a></li> --}}
                 <li><a class="text-danger dropdown-item" href="{{ route('logout') }}">Logout</a></li>
               </ul>
             </li>

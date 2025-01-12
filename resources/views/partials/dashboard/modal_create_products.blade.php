@@ -10,12 +10,13 @@
             <div class="modal-body">
             <form action="{{ route('dashboard.products.post') }}" method="post" enctype="multipart/form-data">
                 @csrf
+                <div class="mb-2 d-flex justify-content-center">
+                    <img src="http://127.0.0.1:8000/images/new/logo-1.png" alt="product image" id="img-create" class="img-thumbnail" style="width: 200px;height: 200px">
+                </div>
                 <div class="mb-3 row">
                     <div class="col-12">
                         <label for="image_path">Gambar Produk</label>
-                        <input type="file" accept="image/png, image/gif, image/jpeg"
-                        name="image_path" placeholder="Input Image Path" class="form-control"
-                        required>
+                        <input type="file" accept="image/png, image/gif, image/jpeg" name="image_path" placeholder="Input Image Path" class="form-control" onchange="changeInputImgCreate(event)">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -99,11 +100,23 @@
                 </div>
                 <div class="mb-3 row">
                     <div class="col-12">
+                        <label for="produk_file">Produk Bisa Input File</label>
+                        <select name="produk_file" id="produk_file_create" value="tidak" class="form-control select2 select2-create" required>
+                            <option value="tidak">Tidak</option>
+                            <option value="multiple">Ya, bisa banyak file</option>
+                            <option value="hanya1">Ya, hanya 1 file</option>
+                        </select>
+                        <input type="text" hidden value="false" name="is_featured">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-12">
                         <label for="status">Status</label>
                         <select name="status" id="status_create" value="draft" class="form-control select2 select2-create" required>
                             <option value="draft">Draft</option>
                             <option value="active">Active</option>
                         </select>
+                        <input type="text" hidden value="false" name="is_featured">
                     </div>
                 </div>
                 <span class="text-danger" style="font-size: .8em">Untuk mengatur promo silakan ke menu promo setelah membuat produk</span>

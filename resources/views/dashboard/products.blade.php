@@ -15,36 +15,7 @@
                     </li>
                 </ul>
             </div>
-            <a href="#" class="btn-download">
-                <i class='bx bxs-cloud-download'></i>
-                <span class="text">Download PDF</span>
-            </a>
         </div>
-
-        <div class="box-info">
-            <div>
-                <i class='bx bxs-calendar-check bg-light-accent text-accent'></i>
-                <span class="text">
-                    <h3>1020</h3>
-                    <p>New Order</p>
-                </span>
-            </div>
-            <div>
-                <i class='bx bxs-group bg-light-accent text-accent'></i>
-                <span class="text">
-                    <h3>2834</h3>
-                    <p>Visitors</p>
-                </span>
-            </div>
-            <div>
-                <i class='bx bxs-dollar-circle bg-light-accent text-accent'></i>
-                <span class="text">
-                    <h3>$2543</h3>
-                    <p>Total Sales</p>
-                </span>
-            </div>
-        </div>
-
 
         <div class="table-data">
             <div class="order">
@@ -53,19 +24,20 @@
                     @if(session('errors'))
                         <div class="alert alert-danger">
                             <ul>
-                                @foreach(session('errors') as $error)
+                                <li>{{ session($errors) }}</li>
+                                {{-- @foreach(session('errors') as $error)
                                     <li>{{ $error }}</li>
-                                @endforeach
+                                @endforeach --}}
                             </ul>
                         </div>
                     @endif
                     <div class="d-flex flex-wrap gap-3">
                         <div class="d-flex flex-wrap gap-3">
-                            <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
+                        {{-- <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
                             data-bs-target="#modalFilter">
                             <i class='bx bx-filter'></i>
                             <span>Filter</span>
-                        </button>
+                        </button> --}}
                         <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
                             data-bs-target="#modalCreate">
                             <i class='bi bi-plus-lg'></i>
@@ -82,7 +54,7 @@
                         </a>
                         </div>
                         <div class="d-flex gap-2 align-items-center position-relative">
-                            <input type="text" placeholder="Search by id orders" id="search_order_id"
+                            <input type="text" placeholder="Cari sku produk.." id="search_product_id"
                                 style="padding-right: 35px" class="form-control">
                             <i class='bx bx-search position-absolute' style="right: 15px"></i>
                         </div>
@@ -187,6 +159,21 @@
         </script>
     @endif
     <script>
+        function changeInputImgCreate(e) {
+            const file = e.target.files[0]; // Ambil file yang dipilih
+            const imgElement = document.getElementById("img-create");
+
+            if (file) {
+                const reader = new FileReader(); // Buat instance FileReader
+
+                // Callback untuk saat file selesai dibaca
+                reader.onload = function(event) {
+                    imgElement.src = event.target.result; // Perbarui src gambar
+                };
+
+                reader.readAsDataURL(file); // Baca file sebagai Data URL
+            }
+        }
         function changeInputImgEdit(e) {
             const file = e.target.files[0]; // Ambil file yang dipilih
             const imgElement = document.getElementById("img-edit");
@@ -282,6 +269,7 @@
                 ajax: {
                     url: "{{ route('dashboard.products') }}"
                 },
+                order: [[10, 'desc']], // Mengatur urutan default pada kolom ke-10 (created_at) secara descending
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
@@ -289,6 +277,7 @@
                     },
                     {
                         data: 'sku',
+                        name: 'sku',
                         searchable: true
                     },
                     {
@@ -383,8 +372,8 @@
                 ]
             });
 
-            $('#search_order_id').on('keyup', function() {
-                table.column(2).search(this.value).draw();
+            $('#search_product_id').on('keyup', function() {
+                table.column(1).search(this.value).draw();
             });
         });
 
@@ -498,7 +487,8 @@
                             </div>
                         </div>
                     </div>
-                </div>`;
+                </div>
+            `;
 
             // Add the modal to the DOM
             $('body').append(appendHtml);
@@ -539,7 +529,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-2 d-flex justify-content-center">
-                                    <img src="${rowData.image_path}" alt="${rowData.name || ''}" id="img-edit" class="img-thumbnail" width="50%">
+                                    <img src="${rowData.image_path}" alt="${rowData.name || ''}" id="img-edit" class="img-thumbnail" style="width: 200px;height: 200px">
                                 </div>
                                 <div class="mb-2 row">
                                     <div class="col-12">
@@ -554,7 +544,17 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="sku">SKU</label>
-                                        <input type="text" name="sku" class="form-control" placeholder="Input Product SKU" value="${rowData.sku || ''}" required>
+                                        <input type="text" name="sku_read" class="form-control" placeholder="Input Product SKU" disabled value="${rowData.sku || ''}" required>
+                                        <input type="text" name="sku" class="form-control" placeholder="Input Product SKU" hidden value="${rowData.sku || ''}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-12">
+                                        <label for="brand">Brand</label>
+                                        <select name="brand" id="brand_edit" class="form-control select2 select2-edit" required>
+                                            <option value="indramedia" ${rowData.brand === "indramedia" ? 'selected' : ''}>Indramedia</option>
+                                            <option value="endez" ${rowData.brand === "endez" ? 'selected' : ''}>Endez</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="mb-2">
@@ -563,51 +563,26 @@
                                 </div>
                                 <div class="mb-2 row">
                                     <div class="col-6">
-                                        <label for="type">Product Type</label>
-                                        <select name="type" id="type_edit" class="form-control select2 select2-type-edit" required>
-                                            <option value="${rowData.type}" selected>${rowData.type.toUpperCase()}</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="category">Category</label>
+                                        <label for="category">Kategori</label>
                                         <select name="category" id="category_edit" class="form-control select2 select2-category-edit" required>
                                             <option value="${rowData.category}" selected>${rowData.category.toUpperCase()}</option>
                                         </select>
                                     </div>
+                                    <div class="col-6">
+                                        <label for="type">Tipe Produk</label>
+                                        <select name="type" id="type_edit" class="form-control select2 select2-type-edit" required>
+                                            <option value="${rowData.type}" selected>${rowData.type.toUpperCase()}</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <div class="col-6">
-                                        <label for="brand">Brand</label>
-                                        <select name="brand" id="brand_edit" class="form-control select2 select2-edit" required>
-                                            <option value="indramedia" ${rowData.brand === "indramedia" ? 'selected' : ''}>Indramedia</option>
-                                            <option value="endez" ${rowData.brand === "endez" ? 'selected' : ''}>Endez</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="price">Price</label>
+                                        <label for="price">Harga Satuan</label>
                                         <input type="number" step="0.01" name="price" class="form-control" placeholder="Input Product Price" value="${parseFloat(rowData.price) || ''}" required>
                                     </div>
-                                </div>
-                                <div class="mb-2 row">
                                     <div class="col-6">
-                                        <label for="stock">Stock</label>
+                                        <label for="stock">Stok</label>
                                         <input type="number" name="stock" class="form-control" placeholder="Tidak boleh kurang dari 0" value="${rowData.stock}" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="status">Status</label>
-                                        <select name="status" class="form-control select2 select2-edit" required>
-                                            <option value="active" ${rowData.status === 'active' ? 'selected' : ''}>Active</option>
-                                            <option value="draft" ${rowData.status === 'draft' ? 'selected' : ''}>Draft</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <div class="col-12">
-                                        <label for="status">Is featured</label>
-                                        <select name="is_featured" class="form-control select2 select2-edit" required>
-                                            <option value="true" ${rowData.is_featured === 1 ? 'selected' : ''}>Yes</option>
-                                            <option value="false" ${rowData.is_featured === 0 ? 'selected' : ''}>No</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -623,6 +598,28 @@
                                         <select name="is_promo" disabled class="form-control select2 select2-edit" required>
                                             <option value="true" ${rowData.is_promo === 1 ? 'selected' : ''}>Yes</option>
                                             <option value="false" ${rowData.is_promo === 0 ? 'selected' : ''}>No</option>
+                                        </select>
+                                        <input type="text" hidden value="false" name="is_featured">
+                                        <input type="number" value="${rowData.is_promo}" hidden name="is_promo_value">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-12">
+                                        <label for="produk_file">Produk Bisa Input File</label>
+                                        <select name="produk_file" id="produk_file_create" value="tidak" class="form-control select2 select2-create" required>
+                                            <option value="tidak" ${rowData.is_onefile == 0 && rowData.is_multiplefile == 0 ? 'selected' : ''}>Tidak</option>
+                                            <option value="multiple" ${rowData.is_multiplefile == 1 ? 'selected' : ''}>Ya, bisa banyak file</option>
+                                            <option value="hanya1" ${rowData.is_onefile == 1 ? 'selected' : ''}>Ya, hanya 1 file</option>
+                                        </select>
+                                        <input type="text" hidden value="false" name="is_featured">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-12">
+                                        <label for="status">Status</label>
+                                        <select name="status" class="form-control select2 select2-edit" required>
+                                            <option value="active" ${rowData.status === 'active' ? 'selected' : ''}>Active</option>
+                                            <option value="draft" ${rowData.status === 'draft' ? 'selected' : ''}>Draft</option>
                                         </select>
                                     </div>
                                 </div>

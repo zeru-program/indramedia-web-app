@@ -19,8 +19,8 @@ li {
 	--lato: 'Lato', sans-serif;
 
 	--light: #F9F9F9;
-	--accent: #F3A81B;
-	--light-accent: rgba(243,168,27,.2);
+	--accent: #198754;
+	--light-accent: #20c997;
 	--grey: #eee;
 	--dark-grey: #AAAAAA;
 	--dark: #342E37;
@@ -526,11 +526,11 @@ body {
 	margin-right: 15px;
 }
 .dt-paging-button {
-	background: rgba(243,168,27,.1) !important;
+	background: var(--light) !important;
 }
 .dt-paging-button.current {
-	background: var(--accent) !important;
-	color: #FFFFFF;
+	/* background: var(--accent) !important; */
+	color: #FFFFFF !important;
 	border: 0 !important;
 }
 .btn-action {

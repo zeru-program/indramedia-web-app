@@ -14,10 +14,7 @@ class FilesOrder extends Model
     protected $fillable = [
         'order_id',
         'file_amount',
-        'file_path_1',
-        'file_path_2',
-        'file_path_3',
-        'file_path_4',
-        'file_path_5'
+        'product_sku',
+        'files'
     ];
 }

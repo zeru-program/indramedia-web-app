@@ -39,16 +39,17 @@ class RegisterController extends Controller
                 'gender' => $request->gender === 'true' ? 1 : 0,
             ]);
 
-            return redirect()->route('login')->with('success_register', 'Berhasil register, silakan Login');
+            return redirect()->route('login')->with('success', 'Berhasil register, silakan Login');
             } else {
-                dd('gagal validate');
+                // dd('gagal validate');
+                return redirect()->back()->with('error', 'Error, semua input harus di isi');
             }
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) { // Error code untuk duplicate entry
-                return redirect()->route('register')->with('error_register', 'Gagal register, username, email, atau phone sudah digunakan.');
+                return redirect()->back()->with('error', 'Gagal register, username, email, atau phone sudah digunakan.');
             }
     
-            return redirect()->route('register')->with('error_register', 'Terjadi kesalahan, silakan coba lagi.');
+            return redirect()->route('register')->with('error', 'Terjadi kesalahan, silakan coba lagi.');
         }
 
     }

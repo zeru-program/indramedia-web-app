@@ -78,6 +78,54 @@ class MasterController extends Controller
 
     }
 
+    public function getBrand(Request $request)
+    {
+        $search = $request->input('q');
+        $pageSize = 10;
+    
+        // Data awal
+        $results = collect([
+            [
+                'id' => 1,
+                'name' => 'indramedia',
+                'description' => 'brand indramedia',
+                'status' => 'active',
+            ],
+            [
+                'id' => 2,
+                'name' => 'endez',
+                'description' => 'brand Endez',
+                'status' => 'active',
+            ],
+        ]);
+    
+        // Filter data jika ada pencarian
+        if ($search) {
+            $results = $results->filter(function ($item) use ($search) {
+                return stripos($item['name'], $search) !== false; // stripos untuk pencarian case-insensitive
+            });
+        }
+    
+        // Pagination status
+        $morePages = false;
+    
+        // Response JSON
+        return response()->json([
+            'items' => $results->map(function ($item) {
+                return [
+                    'id' => $item['id'],
+                    'name' => $item['name'],
+                    'description' => $item['description'],
+                    'status' => $item['status'],
+                ];
+            })->values(), // .values() untuk mereset kunci array
+            'pagination' => [
+                'more' => $morePages,
+            ],
+        ]);
+    }
+    
+
     public function getCategory(Request $request) {
         $search = $request->input('q');
         $pageSize = 10;

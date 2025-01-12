@@ -48,12 +48,25 @@
             <!-- if user not logged in yet -->
             <!-- if user has login  -->
             @auth
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown d-flex">
+              <a class="nav-link text-light position-relative" href="{{ route('cart.checkout') }}">
+                <i class="bi-cart-fill"></i>
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="bottom: 15px;left: -10x;font-size: 8px">
+                  @php
+                    $cartCount = Auth::check() ? Auth::user()->cartItems()->count() : 0;
+                  @endphp
+                  {{ $cartCount > 99 ? '99+' : $cartCount }}
+                  <span class="visually-hidden">total keranjang</span>
+                </span>
+              </a>
               <a class="nav-link gap-4 text-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi-person-fill"></i><span style="margin-left:3px">Hai, {{ Auth::user()->username }}</span>
               </a>
               <ul class="dropdown-menu">
                 {{-- <li><a class="dropdown-item" href="{{ route('akun') }}">Kelola Akun</a></li> --}}
+                @if (Auth::user()->role === "admin")
+                <li><a class="dropdown-item" href="{{ route('dashboard.index') }}">Dashboard</a></li>
+                @endif
                 <li><a class="text-danger dropdown-item" href="{{ route('logout') }}">Logout</a></li>
               </ul>
             </li>

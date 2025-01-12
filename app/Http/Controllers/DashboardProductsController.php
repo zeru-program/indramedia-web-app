@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Imports\ImportProducts;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\Models\Promo;
 use Carbon\Carbon;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +22,7 @@ class DashboardProductsController extends Controller
     public function indexProducts(Request $request) {
 
         if ($request->ajax()) {
-            $query = Products::query()->orderBy('created_at', 'desc');
+            $query = Products::query();
             
             return DataTables::of($query)
             ->addIndexColumn()
@@ -37,6 +39,8 @@ class DashboardProductsController extends Controller
                     'price' => $row->price, // Kolom Harga
                     'stock' => $row->stock, // Kolom Stok
                     'is_populer' => $row->is_populer, // Apakah Produk Populer
+                    'is_onefile' => $row->is_onefile, // Apakah Produk onefile
+                    'is_multiplefile' => $row->is_multiplefile, // Apakah Produk multiplefile
                     'is_featured' => $row->is_featured, // Apakah Produk Featured
                     'is_promo' => $row->is_promo, // Apakah Produk Promo
                     'status' => $row->status, // Status Produk
@@ -44,7 +48,16 @@ class DashboardProductsController extends Controller
                     'updated_at' => $row->updated_at,
                     'urlEdit' => route('dashboard.products.edit', ['id'=>$row->id])
                 ];
+                // dd($data);
                 $jsonData = htmlspecialchars(json_encode($data), ENT_QUOTES, 'UTF-8'); // Safely encode to JSON
+                // $jsonData = json_encode($data);
+                // if ($jsonData === false) {
+                //     Log::error("JSON encoding error: " . json_last_error_msg());
+                //     return ''; // Jika gagal encode, return kosong
+                // }
+
+                // $jsonData = htmlspecialchars($jsonData, ENT_QUOTES, 'UTF-8'); // Safely encode to JSON
+
             
                 return '
                 <div class="d-flex gap-2" style="padding-right: 20px">
@@ -74,8 +87,9 @@ class DashboardProductsController extends Controller
         $is_valid = $request->validate([
             'id' => 'nullable', 
             'sku' => 'required', 
-            'image_path' => 'required|max:2048', 
+            'image_path' => 'nullable|max:2048|mimes:jpeg,png,jpg', 
             'name' => 'required',
+            'produk_file' => 'required',
             'description' => 'nullable', 
             'type' => 'nullable',
             'category' => 'nullable', 
@@ -87,11 +101,15 @@ class DashboardProductsController extends Controller
             'is_promo' => 'nullable',
             'status' => 'required',
         ]);
+
+        $is_one_file = $request->produk_file === "hanya1" ? true : false;
+        $is_multiple_file = $request->produk_file === "multiple" ? true : false;
         
         if ($is_valid) {
             $duplicateEntry = Products::where('sku', $request->sku)
             ->where('name', $request->name)
             ->first();
+
             if ($duplicateEntry) {
                 return redirect()->back()->withErrors([
                     'error' => 'Produk sudah ada, gunakan SKU dan NAMA PRODUK lain.',
@@ -102,10 +120,11 @@ class DashboardProductsController extends Controller
                 $filePath = $request->file("image_path")->store('products', 'public');
                 // $pathName =  $request->file('image')->hashName();
             }
+
             Products::create([
                     'id' => $request->id ?? null,
                     'sku' => $request->sku,
-                    'image_path' => url('/storage/' . $filePath),
+                    'image_path' => $request->hasFile('image_path') ? '/storage/' . $filePath : "/images/new/logo-1.png",
                     'name' => $request->name,
                     'description' => $request->description ?? null, // Opsional
                     'type' => strtolower($request->type) ?? null, // Opsional
@@ -113,6 +132,8 @@ class DashboardProductsController extends Controller
                     'brand' => $request->brand ?? null, // Opsional
                     'price' => $request->price,
                     'stock' => $request->stock,
+                    'is_onefile' => $is_one_file,
+                    'is_multiplefile' => $is_multiple_file,
                     'is_populer' => $request->is_populer === 'true' ? true : false, 
                     'is_featured' => $request->is_featured === 'true' ? true : false,
                     'is_promo' => $request->is_promo === 'true' ? true : false,
@@ -127,12 +148,13 @@ class DashboardProductsController extends Controller
     }
 
     public function editProducts(Request $request, $id) {
-        // dd($request);
+        // dd(intval($request->is_promo_value) === 1 ? true : false);
         $is_valid = $request->validate([
             'id' => 'nullable', 
             'sku' => 'required', 
-            'image_path_new' => 'nullable|max:2048', 
+            'image_path_new' => 'nullable|max:2048|mimes:jpeg,png,jpg', 
             'name' => 'required',
+            'produk_file' => 'required',
             'description' => 'nullable', 
             'type' => 'nullable',
             'category' => 'nullable', 
@@ -142,8 +164,13 @@ class DashboardProductsController extends Controller
             'is_populer' => 'required', 
             'is_featured' => 'required', 
             'is_promo' => 'nullable', 
+            'is_promo_value' => 'required', 
             'status' => 'required',
         ]);
+        
+        $is_one_file = $request->produk_file === "hanya1" ? true : false;
+        $is_multiple_file = $request->produk_file === "multiple" ? true : false;
+
         if (intval($request->stock) < 0) {
             // dd(intval($request->stock));
             
@@ -160,6 +187,19 @@ class DashboardProductsController extends Controller
         if ($is_valid) {
             $product = Products::findOrFail($id);
             $pathImg = null;
+            
+            if (intval($request->is_promo_value) === 1) {
+                $promo = Promo::where('sku', $product->sku)->first();
+                $calculatePromoFirst = $promo->percentage / 100 * $request->price;
+                $calculatePromoResult = $request->price - $calculatePromoFirst;
+                $calculatePromoFirst = round($calculatePromoFirst, 2);
+                $calculatePromoResult = round($calculatePromoResult, 2);
+                Promo::where('sku', $product->sku)->update([
+                    'product_name' => $request->name,
+                    'initial_price' => $request->price,
+                    'promo_price' => $calculatePromoResult
+                ]);
+            }
     
 
             if ($request->hasFile("image_path_new")) {
@@ -169,7 +209,7 @@ class DashboardProductsController extends Controller
                 }
                 Products::where('id', $id)->update([
                     'sku' => $request->sku,
-                    'image_path' => url('/storage/' . $pathImg),
+                    'image_path' => '/storage/' . $pathImg,
                     'name' => $request->name,
                     'description' => $request->description ?? null, // Opsional
                     'type' => strtolower($request->type) ?? null, // Opsional
@@ -177,9 +217,11 @@ class DashboardProductsController extends Controller
                     'brand' => $request->brand ?? null, // Opsional
                     'price' => $request->price,
                     'stock' => $request->stock,
+                    'is_onefile' => $is_one_file,
+                    'is_multiplefile' => $is_multiple_file,
                     'is_populer' => $request->is_populer === 'true' ? true : false, 
                     'is_featured' => $request->is_featured === 'true' ? true : false,
-                    'is_promo' => $request->is_promo === 'true' ? true : false,
+                    'is_promo' => intval($request->is_promo_value) === 1 ? true : false,
                     'status' => strtolower($request->status) ?? 'active',
                 ]);
             } else {
@@ -193,9 +235,11 @@ class DashboardProductsController extends Controller
                     'brand' => $request->brand ?? null, // Opsional
                     'price' => $request->price,
                     'stock' => $request->stock,
+                    'is_onefile' => $is_one_file,
+                    'is_multiplefile' => $is_multiple_file,
                     'is_populer' => $request->is_populer === 'true' ? true : false, 
                     'is_featured' => $request->is_featured === 'true' ? true : false,
-                    'is_promo' => $request->is_promo === 'true' ? true : false,
+                    'is_promo' => intval($request->is_promo_value) === 1 ? true : false,
                     'status' => strtolower($request->status) ?? 'active',
                 ]);
             }
@@ -252,15 +296,19 @@ class DashboardProductsController extends Controller
     
         // Tangkap kesalahan
         $errors = $import->getErrors();
-    
+
+        
         if (!empty($errors)) {
             // Simpan kesalahan ke session
             $errorMessages = array_map(function ($error) {
-                return "Row: " . implode(', ', $error['row']) . " - Error: " . $error['message'];
+                return "Error: " . $error['message'];
             }, $errors);
+            // dd($errorMessages);
+            // dd($errorMessages);
             return redirect()->back()->with([
                 'success' => "Import berhasil dengan beberapa kesalahan.",
-                'errors' => $errorMessages,
+                // 'errors' => json_encode($errorMessages),
+                'errors' => $errors,
             ]);
         }
 

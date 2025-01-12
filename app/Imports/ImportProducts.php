@@ -30,6 +30,8 @@ class ImportProducts implements ToModel, WithStartRow
     public function model(array $row)
     {
         try {
+            Log::info("Processing row: ", $row);
+
             // Abaikan baris jika SKU kosong
             if (is_null($row[1]) || empty($row[1])) {
                 Log::info('Skipping empty SKU row: ', $row);
@@ -37,12 +39,10 @@ class ImportProducts implements ToModel, WithStartRow
             }
             
             // Periksa apakah SKU sudah ada
-            $existingProduct = Products::where('sku', $row[1])->first()->sku;
-            if ($existingProduct) {
-                dd(Products::where('sku', $row[1])->first()->sku);
-                throw new Exception("Duplicate SKU: {$row[1]}");
-                // return null;
-            }
+            // $existingProduct = Products::where('sku', $row[1])->first()->sku;
+            // if ($existingProduct) {
+            //     throw new Exception("Duplicate SKU: {$row[1]}");
+            // }
 
             // Buat produk baru
             return new Products([
@@ -56,7 +56,7 @@ class ImportProducts implements ToModel, WithStartRow
                 'price'         => floatval($row[8]),
                 'stock'         => $row[9] !== null ? intval($row[9]) : 0,
                 'is_onefile'    => strtolower($row[10]) === 'ya',
-                'is_file'       => strtolower($row[11]) === 'ya',
+                'is_multiplefile' => strtolower($row[11]) === 'ya',
                 'is_populer'    => strtolower($row[12]) === 'ya',
                 'is_featured'   => false,
                 'is_promo'      => strtolower($row[13]) === 'ya',
@@ -64,8 +64,9 @@ class ImportProducts implements ToModel, WithStartRow
                 'reviews'       => 0,
                 'status'        => strtolower($row[14]),
             ]);
-        } catch (\Exception $e) {
-            Log::error("Error importing row: " . json_encode($row) . ". Error: " . $e->getMessage());
+        } catch (Exception $e) {
+            // dd($e->getMessage());
+            Log::error("Error importing row: " . $e->getMessage());
             $this->errors[] = [
                 'row' => $row,
                 'message' => $e->getMessage(),

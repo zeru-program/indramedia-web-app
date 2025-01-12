@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
     <!--  stylesheet lokal   -->
     <link rel="stylesheet" href="/css/global.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
      @yield('styles')
 </head>
 <body>
-    <main class="w-100 bg-light vh-100 d-flex justify-content-center align-items-center position-fixed start-0 top-0">
+    <main class="w-100 bg-light d-flex justify-content-center py-5 align-items-start">
         <section class="d-flex container-fluid flex-column justify-content-center shadow-sm rounded-2 box-auth" style="background: #FFFFFF">
-            <h0 class="text-center fw-bold">Register</h0>
-            <h1 class="text-center mb-4">Indramedia store</h1>
+            <h1 class="text-center fw-b">Register</h1>
+            <span class="text-center mb-4">Indramedia store</span>
             <form action="{{ route('register.post') }}" method="post">
                 @csrf
                 <div class="row">
@@ -31,8 +32,8 @@
                     <div class="mb-2 col-12">
                         <label for="password">Password</label>
                         <div class="position-relative">
-                            <input type="password" name="password" id="password" minlength="3" placeholder="masukan password" class="form-control" style="padding-right: 40px" required>
-                            <div class="position-absolute" style="right: 15px;top: 8px;cursor: pointer" onclick="handleEye()">
+                            <input type="password" name="password" id="password" minlength="3" placeholder="masukan password" class="form-control" style="padding-right: 45px" required>
+                            <div class="position-absolute" style="font-size: 25px;right: 20px;top: 8px;cursor: pointer" onclick="handleEye()">
                                 <i class="bi-eye-slash-fill icon-eyes-pass"></i>
                             </div>
                         </div>
@@ -47,21 +48,21 @@
                 <div class="row">
                     <div class="mb-2 col-12">
                         <label for="phone">Phone</label>
-                        <input type="number" name="phone" minlength="6" placeholder="masukan phone" class="form-control" required>
+                        <input type="number" name="phone" min="6" placeholder="masukan phone" class="form-control" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-2 col-12">
                         <label for="gender">Gender</label>
-                        <div class="w-100 py-2 form-control">
+                        <div class="w-100 h-auto py-2 form-control">
                             <div class="form-check">
-                                <input class="form-check-input" name="gender" type="checkbox" value="true" id="gender_input_laki">
+                                <input class="form-check-input" name="gender" type="radio" value="true" id="gender_input_laki" required>
                                 <label class="form-check-label" for="gender_input_laki">
                                   Laki-laki
                                 </label>
                               </div>
                               <div class="form-check">
-                                <input class="form-check-input" name="gender" type="checkbox" value="false" id="gender_input_perempuan">
+                                <input class="form-check-input" name="gender" type="radio" value="false" id="gender_input_perempuan">
                                 <label class="form-check-label" for="gender_input_perempuan">
                                   Perempuan
                                 </label>
@@ -70,6 +71,12 @@
                     </div>
                 </div>
                 <button type="submit" class="w-100 mt-4 btn btn-primary">Register</button>
+                <div class="w-100 d-flex justify-content-center mt-3">
+                    <span class="text-center">
+                        Sudah Punya Akun?
+                        <a href="{{ route('login') }}"> Login Disini.</a>
+                    </span>
+                </div>
             </form>
         </section>
     </main>
@@ -77,6 +84,41 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var toastMixin = Swal.mixin({
+            toast: true,
+            icon: 'success',
+            title: 'General Title',
+            animation: false,
+            position: 'top-right',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+    </script>
+    @if (session()->has('error'))
+    <script>
+        toastMixin.fire({
+            animation: true,
+            icon: 'error',
+            title: "{{ session('error') }}"
+        });
+    </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            toastMixin.fire({
+                animation: true,
+                icon: "error",
+                title: "{{ $errors }}"
+            });
+        </script>
+    @endif
     <script>
         let isPassEyeClicked = false;
         function handleEye() {

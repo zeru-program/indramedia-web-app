@@ -4,9 +4,9 @@
 <main class="fh-page py-5">
     <section class="container mt-5">
         @if(Session::has('success'))
-        <h1 style="font-size:2em" class="text-success fw-b">{{ Session::get('success') }}</h1>
+        <h1 class="text-success fw-b">{{ Session::get('success') }}</h1>
         @endif
-        <h1 class="fw-bold">Order id <span class="text-primary">{{ $data->order_id }}</span></h1>
+        <h2 class="fw-bold">Order id <span class="text-primary">{{ $data->order_id }}</span></h2>
         <div>
             <div>
                 @php
@@ -105,34 +105,35 @@
                         <input type="text" disabled class="form-control" value="{{ str_replace("_", " ", $data->product_delivery) }}">
                     </div>
                 </div>
-                @if (Auth::user())
-                    @if ($data->order_name === Auth::user()->username && $data->order_is_file == 1 && $data->status !== "success")
-                        @for ($i = 0; $i < $data->product_amount; $i++)
+                @if (Auth::user() || Session::get('user_ordered'))
+                    {{-- @dd($data->order_is_multiplefile) --}}
+                    @if (($data->order_name === Auth::user()->username || Session::get('user_ordered')) && $data->order_is_multiplefile == 1 && $data->status !== "success")
+                        @foreach ($files as $index => $file)
                             <div class="row">
                                 <div class="col-12 mb-2">
-                                    <label for="">File {{ $i + 1 }}</label>
+                                    <label for="">File {{ $index }}</label>
                                     <div class="rounded-2 py-2 px-3 overflow-hidden" style="background: #E9ECEF">
-                                        <a class="" style="word-wrap: break-word" href="{{ url('/storage/' . $file_order->{'file_path_' . ($i + 1)}) }}">{{ url('/storage/' . $file_order->{'file_path_' . ($i + 1)}) }}</a>
+                                        <a class="" style="word-wrap: break-word" href="{{ url('/storage/' . $file) }}">{{ url('/storage/' . $file) }}</a>
                                     </div>
                                 </div>
                             </div>
-                        @endfor
-                    @else
-                    @endif
-                @else
-                @if (Session::get('user_ordered') && $data->order_is_file == 1 && $data->status !== "success")
-                    @for ($i = 0; $i < $data->product_amount; $i++)
-                        <div class="row">
-                            <div class="col-12 mb-2">
-                                <label for="">File {{ $i + 1 }}</label>
-                                <div class="rounded-2 py-2 px-3 overflow-hidden" style="background: #E9ECEF">
-                                    <a class="" style="word-wrap: break-word" href="{{ url('/storage/' . $file_order->{'file_path_' . ($i + 1)}) }}">{{ url('/storage/' . $file_order->{'file_path_' . ($i + 1)}) }}</a>
+                        @endforeach
+                    @elseif (($data->order_name === Auth::user()->username || Session::get('user_ordered')) && $data->order_is_onefile == 1 && $data->status !== "success")
+                        @foreach ($files as $index => $file)
+                            <div class="row">
+                                <div class="col-12 mb-2">
+                                    <label for="">File Yang Di Upload</label>
+                                    <div class="rounded-2 py-2 px-3 overflow-hidden" style="background: #E9ECEF">
+                                        <a class="" style="word-wrap: break-word" href="{{ url('/storage/' . $file) }}">{{ url('/storage/' . $file) }}</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endfor
-                @else
-                @endif
+                        @endforeach
+                    @else
+                        {{-- <p>File tidak tersedia atau kondisi tidak terpenuhi.</p> --}}
+                    @endif
+                    @else
+                    <p>Harap login untuk melihat file.</p>
                 @endif
             </div>
             <div class="mt-4">

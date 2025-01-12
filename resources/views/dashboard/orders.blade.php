@@ -15,34 +15,10 @@
                 </li>
             </ul>
         </div>
-        <a href="#" class="btn-download">
+        {{-- <a href="#" class="btn-download">
             <i class='bx bxs-cloud-download'></i>
             <span class="text">Download PDF</span>
-        </a>
-    </div>
-
-    <div class="box-info">
-        <div>
-            <i class='bx bxs-calendar-check bg-light-accent text-accent'></i>
-            <span class="text">
-                <h3>1020</h3>
-                <p>New Order</p>
-            </span>
-        </div>
-        <div>
-            <i class='bx bxs-group bg-light-accent text-accent'></i>
-            <span class="text">
-                <h3>2834</h3>
-                <p>Visitors</p>
-            </span>
-        </div>
-        <div>
-            <i class='bx bxs-dollar-circle bg-light-accent text-accent'></i>
-            <span class="text">
-                <h3>$2543</h3>
-                <p>Total Sales</p>
-            </span>
-        </div>
+        </a> --}}
     </div>
 
 
@@ -52,11 +28,11 @@
                 <h3>Rekap Order (Online)</h3>
                 <div class="d-flex flex-wrap gap-3">
                     <div class="d-flex flex-wrap gap-3">
-                        <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
+                        {{-- <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
                             data-bs-target="#modalFilter">
                             <i class='bx bx-filter'></i>
                             <span>Filter</span>
-                        </button>
+                        </button> --}}
                         <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
                             data-bs-target="#modalCreate">
                             <i class='bi bi-plus-lg'></i>
@@ -78,161 +54,7 @@
                     </div>
                 </div>
                 <!-- Modal Create -->
-                <div class="modal fade" id="modalCreate" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Create</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="{{ route('dashboard.orders.post') }}" method="post">
-                                    @csrf
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="order_id">Order id</label>
-                                            <input type="text" name="order_id" maxlength="8" placeholder='Optional'
-                                                class="form-control">
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="order_name">Order name</label>
-                                            <input type="text" name="order_name" placeholder='Input Order Name'
-                                                class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="order_phone">Order phone</label>
-                                            <input type="number" name="order_phone" placeholder='Input Order Phone'
-                                                class="form-control" required>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="order_message">Order message</label>
-                                            <input type="text" name="order_message" value="-"
-                                                placeholder='Optional' class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="product_name">Product name</label>
-                                            <input type="text" name="product_name" placeholder='Input Product Name'
-                                                class="form-control" required>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="product_sku">Product SKU</label>
-                                            <input type="text" name="product_sku" placeholder='Input Product SKU'
-                                                class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="product_type">Product type</label>
-                                            <input type="text" name="product_type"
-                                                placeholder='Input Product Type' class="form-control" required>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="product_category">Product category</label>
-                                            <input type="text" name="product_category"
-                                                placeholder='Input Product Category' class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="product_brand">Product brand</label>
-                                            <input type="text" name="product_brand"
-                                                placeholder='Input Product Brand' class="form-control" required>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="order_is_file">Order is file</label>
-                                            {{-- <div>
-                                            <input type="checkbox" name="order_is_file" value="true" class="form-check-input">
-                                            <label for="">Yes</label>
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" name="order_is_file" value="false" class="form-check-input">
-                                            <label for="">No</label>
-                                        </div> --}}
-                                            <select name="order_is_file" id="" class="form-control"
-                                                value='false' required>
-                                                <option value="false">False</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="product_is_promo">Product is promo</label>
-                                            {{-- <div>
-                                            <input type="checkbox" name="product_is_promo" value="true" class="form-check-input">
-                                            <label for="">Yes</label>
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" name="product_is_promo" value="false" class="form-check-input">
-                                            <label for="">No</label>
-                                        </div> --}}
-                                            <select name="product_is_promo" id="" class="form-control"
-                                                value='false' required>
-                                                <option value="false">No</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="product_amount">Product amount</label>
-                                            <input type="number" name="product_amount"
-                                                placeholder='Input Product Amount' class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="product_price_unit">Price per unit</label>
-                                            <input type="number" step="0.01" name="product_price_unit"
-                                                placeholder='Input Price Unit' class="form-control" required>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="product_price_totals">Product price totals</label>
-                                            <input type="number" step="0.01" name="product_price_totals"
-                                                placeholder='Input Product Price Totals' class="form-control"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="product_price_discount">Price discount</label>
-                                            <input type="number" step="0.01" name="product_price_discount"
-                                                placeholder='Input Price Discount' class="form-control">
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="product_percentage_discount">Percentage discount</label>
-                                            <input type="number" step="0.01" name="product_percentage_discount"
-                                                placeholder='Input Product Percentage Discount' class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <div class="col-6">
-                                            <label for="product_price_totals">Payment Method</label>
-                                            <select name="product_payment_method" id="" class="form-control"
-                                                value='cod' required>
-                                                <option value="cod">Cod</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="product_price_totals">Product Delivery Method</label>
-                                            <select name="product_delivery" id="" class="form-control"
-                                                value='cod' required>
-                                                <option value="cod">Cod</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn text-light bg-accent">Create</button>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                @include('partials.dashboard.modal_create_orders')
                 <!-- Modal Filter -->
                 <div class="modal fade" id="modalFilter" data-bs-backdrop="static" data-bs-keyboard="false"
                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -278,11 +100,11 @@
 @endsection
 
 @section('script')
-    @if (session()->has('success_create_order'))
+    @if (session()->has('success'))
         <script>
             toastMixin.fire({
                 animation: true,
-                title: "{{ session('success_create_order') }}"
+                title: "{{ session('success') }}"
             });
         </script>
     @endif
@@ -311,6 +133,15 @@
             });
         </script>
     @endif
+    @if ($errors->any())
+        <script>
+            toastMixin.fire({
+                animation: true,
+                icon: "error",
+                title: "{{ $errors }}"
+            });
+        </script>
+    @endif
     <script>
         function handeDetail(data) {
             // Parse the data if it's passed as a JSON string
@@ -333,7 +164,7 @@
                                     aria-label="Tutup"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="d-flex w-100 mb-2 justify-content-center gap-2">
+                                <div class="d-flex w-100 mb-2 align-items-center flex-column gap-2">
                                     <div class="d-flex flex-column justify-content-center text-center"> 
                                         <label>Status Pesanan</label>
                                         <div class="badge ${
@@ -354,79 +185,106 @@
                                             'Tidak Diketahui'}
                                         </div>
                                     </div>
+                                    ${
+                                        rowData.order_is_multiplefile || rowData.order_is_onefile ? (`
+                                        <div class="d-flex flex-column justify-content-center text-center">
+                                            <label>File yang diunggah pembeli (${rowData.order_is_multiplefile == 1 ? rowData.product_amount : "1"}file)</label>
+                                            <a class="badge bg-primary text-light" style='cursor: pointer' href='${rowData.order_is_onefile == 1 ? `/dashboard/orders/download/onefile/${rowData.order_id}` : `/dashboard/orders/download/multiplefile/${rowData.order_id}`}'>
+                                                Download ${rowData.order_is_onefile == 1 ? "" : "Semua"} File
+                                            </a>
+                                        </div>`) : ""
+                                    }
                                 </div>
                                 <div class="d-flex flex-column gap-2">
-                                    <div class="d-flex justify-content-between">
-                                        <label>ID Pesanan</label>
-                                        <div class="badge bg-primary">${rowData.order_id || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>ID Pesanan</label>
+                                            <div class="badge w-100 bg-primary">${rowData.order_id || 'N/A'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Nama Pemesan</label>
+                                            <div class="badge w-100 bg-primary">${rowData.order_name || 'N/A'}</div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Nama Pemesan</label>
-                                        <div class="badge bg-primary">${rowData.order_name || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>No. Telepon</label>
+                                            <div class="badge w-100 bg-primary">${rowData.order_phone || 'N/A'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Pesan</label>
+                                            <div class="badge w-100 bg-primary">${rowData.order_message || 'N/A'}</div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>No. Telepon</label>
-                                        <div class="badge bg-primary">${rowData.order_phone || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Nama Produk</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_name || 'N/A'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>SKU Produk</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_sku || 'N/A'}</div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Pesan</label>
-                                        <div class="badge bg-primary">${rowData.order_message || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Jenis Produk</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_type || 'N/A'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Kategori Produk</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_category || 'N/A'}</div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Nama Produk</label>
-                                        <div class="badge bg-primary">${rowData.product_name || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Merek Produk</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_brand || 'N/A'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Pesanan Berupa File</label>
+                                            <div class="badge w-100 bg-primary">${rowData.order_is_onefile == true || rowData.order_is_multiplefile == true ? 'Ya' : 'Tidak'}</div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>SKU Produk</label>
-                                        <div class="badge bg-primary">${rowData.product_sku || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Produk Promo</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_is_promo === 'true' ? 'Ya' : 'Tidak'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Jumlah Produk</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_amount || 'N/A'}</div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Jenis Produk</label>
-                                        <div class="badge bg-primary">${rowData.product_type || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Harga per Unit</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_price_unit || 'N/A'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Total Harga Produk</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_price_totals || 'N/A'}</div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Kategori Produk</label>
-                                        <div class="badge bg-primary">${rowData.product_category || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Diskon Harga</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_price_discount || 'N/A'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Persentase Diskon</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_percentage_discount || 'N/A'}</div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Merek Produk</label>
-                                        <div class="badge bg-primary">${rowData.product_brand || 'N/A'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Pesanan Berupa File</label>
-                                        <div class="badge bg-primary">${rowData.order_is_file === 'true' ? 'Ya' : 'Tidak'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Produk Promo</label>
-                                        <div class="badge bg-primary">${rowData.product_is_promo === 'true' ? 'Ya' : 'Tidak'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Jumlah Produk</label>
-                                        <div class="badge bg-primary">${rowData.product_amount || 'N/A'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Harga per Unit</label>
-                                        <div class="badge bg-primary">${rowData.product_price_unit || 'N/A'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Total Harga Produk</label>
-                                        <div class="badge bg-primary">${rowData.product_price_totals || 'N/A'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Diskon Harga</label>
-                                        <div class="badge bg-primary">${rowData.product_price_discount || 'N/A'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Persentase Diskon</label>
-                                        <div class="badge bg-primary">${rowData.product_percentage_discount || 'N/A'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Metode Pembayaran</label>
-                                        <div class="badge bg-primary">${rowData.product_payment_method || 'N/A'}</div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <label>Metode Pengiriman</label>
-                                        <div class="badge bg-primary">${rowData.product_delivery || 'N/A'}</div>
+                                    <div class="row w-100">
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Metode Pembayaran</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_payment_method || 'N/A'}</div>
+                                        </div>
+                                        <div class="d-flex col-6 flex-column align-items-center">
+                                            <label>Metode Pengiriman</label>
+                                            <div class="badge w-100 bg-primary">${rowData.product_delivery || 'N/A'}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-4 gap-3">
@@ -438,8 +296,6 @@
                     </div>
                 </div>
             `;
-
-
 
             // Add the modal to the DOM
             var tempDiv = document.createElement('div');
@@ -543,8 +399,9 @@
                                         <div class="col-6">
                                             <label for="order_is_file">Order is File</label>
                                             <select name="order_is_file" class="form-control" required>
-                                                <option value="false" ${rowData.order_is_file == 0 ? 'selected' : ''}>False</option>
-                                                <option value="true" ${rowData.order_is_file == 1 ? 'selected' : ''}>True</option>
+                                                <option value="tidak" ${rowData.order_is_onefile == 0 && rowData.order_is_multiplefile == 0 ? 'selected' : ''}>Tidak</option>
+                                                <option value="multiple" ${rowData.order_is_multiplefile == 1 ? 'selected' : ''}>Ya, bisa banyak file</option>
+                                                <option value="hanya1" ${rowData.order_is_onefile == 1 ? 'selected' : ''}>Ya, hanya 1 file</option>
                                             </select>
                                         </div>
                                     </div>
@@ -693,6 +550,42 @@
     </script>
     <script>
         $(document).ready(function() {
+            $(".select2-create").select2({
+                dropdownParent: $('#modalCreate')
+            })
+            
+            $("#product_create").select2({
+                dropdownParent: $('#modalCreate'),
+                width: '100%',
+                placeholder: 'Pilih Produk',
+                //minimumInputLength: 2,
+                ajax: {
+                    url: "{{ route('master.products') }}", 
+                    dataType: 'json',
+                    delay: 250,
+                    // data: function(params) {
+                    //     return {
+                    //         q: params.term,
+                    //         page: params.page || 1
+                    //     };
+                    // },
+                    processResults: function(data, params) {
+                        console.log("Fetched data:", data); // Check data structure here
+                        return {
+                            results: data.items.map(function(item) {
+                                return {
+                                    id: item.sku,
+                                    text: item.name + " - " + item.sku,
+                                    price: item.price
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            }).on('select2:select', function(e) {
+                $('#initial_price').val(parseFloat(e.params.data.price))
+            });
             var table = $('#myTable').DataTable({
                 searching: false,
                 paging: true,
@@ -703,6 +596,7 @@
                 ajax: {
                     url: "{{ route('dashboard.orders') }}"
                 },
+                order: [[10, 'desc']],
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,

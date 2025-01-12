@@ -101,6 +101,7 @@ class ExportProducts implements FromCollection, WithCustomStartCell, WithEvents
         return $data->map(function ($data, $index) {
             $reviews =  (string)$data->reviews;
             $stock =  (string)$data->stock;
+            $rating =  (string)$data->star;
             return [
                 '#' => $index + 1,
                 'SKU' => $data->sku, 
@@ -111,7 +112,7 @@ class ExportProducts implements FromCollection, WithCustomStartCell, WithEvents
                 'Type' => $data->type,
                 'Category' => $data->category,
                 'Brand' => $data->brand,
-                'Jumlah Rating' => $data->star,
+                'Jumlah Rating' => $rating !== "0" ? $rating : "0",
                 'Jumlah Ulasan' => $reviews !== "0" ? $reviews : "0",
                 'Stock' =>  $stock !== "0" ? $stock : "0",
                 'Populer' => $data->is_populer ? 'Ya' : 'Tidak',

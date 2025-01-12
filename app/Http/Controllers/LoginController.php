@@ -35,7 +35,7 @@ class LoginController extends Controller
                 return redirect()->route('home')->with('succes_login', 'Berhasil login');
             }
         } else {
-            return redirect()->back()->with('error_login', 'Gagal login, username atau password tidak cocok');
+            return redirect()->back()->with('error', 'Gagal login, username atau password tidak cocok');
         }
     }
 }

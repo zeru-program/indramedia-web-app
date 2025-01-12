@@ -14,7 +14,8 @@ class OrdersController extends Controller
         $data = Orders::where('order_id', $id)->first();
     
         if (!$data) {
-            abort(404, 'Order not found');
+            // abort(404, 'Order not found');
+            return view('orders.order-not-found');
         }
     
         $data2 = Products::where('sku', $data->product_sku)->first();
@@ -24,11 +25,15 @@ class OrdersController extends Controller
         }
     
         $file_order = FilesOrder::where('order_id', $data->order_id)->first();
+
+        $files = json_decode($file_order->files ?? null, true);
+
+        // dd($files);
     
         // if (!$file_order) {
         //     abort(404, 'File order not found');
         // }
     
-        return view('orders.detail', compact('data', 'data2', 'file_order'));
+        return view('orders.detail', compact('data', 'data2', 'file_order', 'files'));
     }    
 }

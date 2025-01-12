@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\{HomeController, ProductsController, OrdersController, BlogController, OrdersLangsungController, DashboardController, LoginController, RegisterController, ArtikelController, DashboardBlogController, DashboardCategoryController, DashboardOrdersController, DashboardPopularController, DashboardProductsController, DashboardPromoController, DashboardTypeController, DashboardUserController, DashboardUsersController, MasterController};
+use App\Http\Controllers\{HomeController, ProductsController, OrdersController, BlogController, OrdersLangsungController, DashboardController, LoginController, RegisterController, ArtikelController, CartController, DashboardBlogController, DashboardCategoryController, DashboardOrdersController, DashboardPopularController, DashboardProductsController, DashboardPromoController, DashboardTypeController, DashboardUserController, DashboardUsersController, MasterController};
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +39,14 @@ Route::get("/lacak-pesanan", function() {
     return view('orders.tracking-order');
 })->name("lacak-pesanan");
 
+// Route cart products
+Route::prefix('keranjang')->group(function() {
+    Route::get('/', [CartController::class, 'cartCheckoutIndex'])->name('cart.checkout');
+    Route::post('/checkout', [CartController::class, 'cartCheckoutPost'])->name('cart.checkout.post');
+    Route::delete('/delete/{id}', [CartController::class, 'cartCheckoutDelete'])->name('cart.delete');
+    Route::post('/create', [CartController::class, 'cartPost'])->name('cart.create');
+});
+
 // Route orders
 Route::prefix('order')->group(function() {
     Route::get('/', function() {
@@ -54,6 +62,8 @@ Route::middleware(AdminMiddleware::class)->prefix('dashboard')->group(function()
     
     Route::prefix('orders')->group(function() {
        Route::get('/', [DashboardOrdersController::class, 'indexOrders'])->name('dashboard.orders');
+       Route::get('/download/onefile/{id}', [DashboardOrdersController::class, 'downloadOneFile'])->name('dashboard.download.onefile');
+       Route::get('/download/multiplefile/{id}', [DashboardOrdersController::class, 'downloadMultiFile'])->name('dashboard.download.multiplefile');
        Route::post('/create', [DashboardOrdersController::class, 'postOrders'])->name('dashboard.orders.post');
        Route::put('/edit/{id}', [DashboardOrdersController::class, 'editOrders'])->name('dashboard.orders.edit');
        Route::delete('/delete/{id}', [DashboardOrdersController::class, 'deleteOrders'])->name('dashboard.orders.delete');
@@ -92,9 +102,14 @@ Route::middleware(AdminMiddleware::class)->prefix('dashboard')->group(function()
        Route::delete('/delete/{id}', [DashboardPromoController::class, 'deletePromo'])->name('dashboard.promo.delete');
        Route::put('/edit/{id}', [DashboardPromoController::class, 'editPromo'])->name('dashboard.promo.edit');
     });
-    
-    Route::get('/artikel', [DashboardBlogController::class, 'indexBlog'])->name('dashboard.blog');
-    
+
+    Route::prefix('artikel')->group(function() {
+       Route::get('/', [DashboardBlogController::class, 'indexBlog'])->name('dashboard.blog');
+       Route::post('/create', [DashboardBlogController::class, 'postBlog'])->name('dashboard.blog.post');
+       Route::delete('/delete/{id}', [DashboardBlogController::class, 'deleteBlog'])->name('dashboard.blog.delete');
+       Route::put('/edit/{id}', [DashboardBlogController::class, 'editBlog'])->name('dashboard.blog.edit');
+    });
+
     // Route::get('/users', [DashboardUsersController::class, 'indexUsers'])->name('dashboard.users');
     Route::prefix('users')->group(function() {
        Route::get('/', [DashboardUsersController::class, 'indexUsers'])->name('dashboard.users');
@@ -108,6 +123,7 @@ Route::middleware(AdminMiddleware::class)->prefix('dashboard')->group(function()
 Route::prefix('master')->group(function() {
     Route::get('/get-products', [MasterController::class, 'getProducts'])->name('master.products');
     Route::get('/get-orders', [MasterController::class, 'getOrders'])->name('master.orders');
+    Route::get('/get-brand', [MasterController::class, 'getBrand'])->name('master.brand');
     Route::get('/get-type', [MasterController::class, 'getType'])->name('master.type');
     Route::get('/get-category', [MasterController::class, 'getCategory'])->name('master.category');
     Route::get('/get-promo', [MasterController::class, 'getPromo'])->name('master.promo');
@@ -133,6 +149,6 @@ Route::prefix('auth')->group(function() {
     
     Route::get('/logout', function() {
         Auth::logout();
-        return redirect()->route('home');
+        return redirect()->route('login');
     })->name('logout');
 });

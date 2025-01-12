@@ -22,6 +22,8 @@ class Products extends Model
         'brand',
         'price',
         'stock',
+        'is_onefile',
+        'is_multiplefile',
         'is_populer',
         'is_featured',
         'is_promo',

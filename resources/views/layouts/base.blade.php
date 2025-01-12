@@ -6,8 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
     <title>Indramedia Store</title>
+	<meta name="description" content="Indramedia Menyediakan Yang Kamu Butuhkan, Bookstore, Digital, Computer, Web Development, Furniture Office & School, Fotografi">
+	<meta name="author" content="Indramedia">
+	<link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+	<link rel="icon" href="images/logo.png" type="image/x-icon">
+	<!-- # Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+	<!-- # CSS Plugins -->
+	<link rel="stylesheet" href="/plugins/slick/slick.css">
+	<link rel="stylesheet" href="/plugins/font-awesome/fontawesome.min.css">
+	<link rel="stylesheet" href="/plugins/font-awesome/brands.css">
+	<link rel="stylesheet" href="/plugins/font-awesome/solid.css">
+
+	<!-- # Main Style Sheet -->
+	<link rel="stylesheet" href="/css/style.css">
     <!--  stylesheet public (bootstrap icons typography) and library  -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
     <!--  stylesheet lokal   -->
@@ -38,7 +54,14 @@
         @include('partials.btn-top')
         <!-- back to top -->
         
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- # JS Plugins -->
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <script src="/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="/plugins/slick/slick.min.js"></script>
+    <script src="/plugins/scrollmenu/scrollmenu.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

@@ -8,13 +8,13 @@ html {
 	--lato: 'Lato', sans-serif;
 
 	--light: #F9F9F9;
-	--accent: #F3A81B;
-	--light-accent: rgba(243,168,27,.2);
+	--accent: #198754;
+	--light-accent: #E0F2E5;
 	--grey: #eee;
 	--dark-grey: #AAAAAA;
 	--dark: #342E37;
 	--red: #DB504A;
-	--yellow: #FFCE26;
+	--yellow:#198754;
 	--light-yellow: #FFF2C6;
 	--orange: #FD7238;
 	--light-orange: #FFE0D3;
@@ -23,15 +23,32 @@ html {
 body {
     overflow-x: hidden;
     background: #FFFFFF;
-    font-family: "Mulish", Sans-Serif;
+    font-family: "Rubik", sans-serif;
+    /* font-weight: 100 !important; */
 }
 * {
     box-sizing: border-box;
 }
-
-h1 {
-    font-size: 1.2em;
+.wow {
+    animation-duration: 1.5s !important;
+    /* animation-delay: 1s !important; */
 }
+.select2-selection__rendered {
+    line-height: 51px !important;
+}
+.select2-container .select2-selection--single {
+    height: 51px !important;
+}
+.select2-selection__arrow {
+    height: 51px !important;
+}
+.btn.bg-ac:hover, .btn.bg-sc:hover {
+    background-color: var(--accent) !important;
+    color: var(--light) !important;
+}
+/* h1 {
+    font-size: 1.2em;
+} */
 h0 {
     font-size: 1.5em;
 }
@@ -40,13 +57,13 @@ h0 {
     background: #ffffff;
 }
 .bg-sc {
-    background: rgba(243,168,27,.2);
+    background: #E0F2E5;
 }
 .bg-sc-2 {
     background: rgba(243,168,27,.2);
 }
 .bg-ac {
-    background: rgba(243,168,27);
+    background: var(--accent);
 }
 .bg-success {
     background-color: #2F8D47 !important;
@@ -58,10 +75,10 @@ h0 {
     color:;
 } */
 .color-ac {
-    color: rgba(243,168,27);
+    color: var(--accent);
 }
 .btn-ac {
-    background: rgba(243,168,27);
+    background: var(--accent);
     color: white;
     text-decoration: none;
 }
@@ -71,7 +88,7 @@ h0 {
 /* indramedia color
 - blue #0A69A7 rgba(10,105,167)
 - red #F24406 rgba(242,68,6)
-- yellow #F3A81B rgba(243,168,27)
+- yellow #F3A81B var(--accent)
 - green #2F8D47 rgba(47,141,71) */
 /* navbar style */
 .navbar {
@@ -105,7 +122,7 @@ h0 {
 .dropdown-item:active,
 .dropdown-item:focus {
     color: white;
-    background: rgba(243,168,27);
+    background: var(--accent);
 }
 
 /* landing page home style */
@@ -128,9 +145,9 @@ h0 {
     mix-blend-mode: multiply;
 }
 .btn-home {
-    border: 1px solid #FFFFFF;
-    background: #FFFFFF;
-    color: #000000;
+    /* border: 1px solid #FFFFFF; */
+    background: var(--accent);
+    color: var(--light);
 }
 .btn-home-outline {
     border: 1px solid #FFFFFF;
@@ -213,6 +230,15 @@ h0 {
     width: 100%;
     height: 230px;
 }
+.desc-short-blog {
+    overflow: hidden;
+    line-height: 20px;
+    height: 40px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
 .btn-sort {
     background: rgba(243,168,27,1);
 }
@@ -231,11 +257,14 @@ h0 {
     background: rgba(243,168,27,1);
     color: white;
 }
+.img-checkout {
+    width: 100px;
+}
 
 /* artikel page style */
 .box-artikel {
     width: 300px;
-    height: 300px;
+    height: 3000px;
     background: #ffffff;
     overflow: hidden;
 }
@@ -273,6 +302,18 @@ h0 {
         text-wrap: nowrap;
         margin-bottom: 0;
     }
+    .wrap-sm {
+        flex-wrap: wrap;
+    }
+    .mt-sm-2 {
+        margin-top: 10px;
+    }
+    .w-sm-100 {
+        width: 100% !important;
+    }
+    .search-home {
+        width: 45% !important;
+    }
 }
 
 /* about page style */
@@ -288,7 +329,7 @@ h0 {
 
 /* contact us page style */
 .contain-map-contact {
-    width: 90%;
+    width: 100%;
     height: 250px;
     overflow: hidden;
 }
@@ -443,11 +484,11 @@ h0 {
         height: 200px;
     }
     .box-artikel {
-        width: 230px;
-        height: 230px;
+        width: 300px;
+        height: 350px;
     }
     .box-artikel div {
-        height: 130px;
+        height: 250px;
     }
     .contain-line-progress {
         flex-direction: column;
@@ -456,9 +497,13 @@ h0 {
 
 /* auth styles  */
 .box-auth {
-    width: 350px;
+    width: 350px !important;
     height: auto;
     padding-block: 20px;
+}
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
 }
 
 @media screen and (max-width: 700px) {

@@ -15,34 +15,10 @@
                     </li>
                 </ul>
             </div>
-            <a href="#" class="btn-download">
+            {{-- <a href="#" class="btn-download">
                 <i class='bx bxs-cloud-download'></i>
                 <span class="text">Download PDF</span>
-            </a>
-        </div>
-
-        <div class="box-info">
-            <div>
-                <i class='bx bxs-calendar-check bg-light-accent text-accent'></i>
-                <span class="text">
-                    <h3>1020</h3>
-                    <p>New Order</p>
-                </span>
-            </div>
-            <div>
-                <i class='bx bxs-group bg-light-accent text-accent'></i>
-                <span class="text">
-                    <h3>2834</h3>
-                    <p>Visitors</p>
-                </span>
-            </div>
-            <div>
-                <i class='bx bxs-dollar-circle bg-light-accent text-accent'></i>
-                <span class="text">
-                    <h3>$2543</h3>
-                    <p>Total Sales</p>
-                </span>
-            </div>
+            </a> --}}
         </div>
 
 
@@ -455,7 +431,7 @@
 
             const promoPrice = initialPrice - (initialPrice * (percentage / 100));
 
-            promoPriceElement.value = promoPrice.toFixed(2); 
+            promoPriceElement.value = promoPrice; 
             displayPercentageElement.textContent = `${percentage}%`; 
         }
 
@@ -661,7 +637,7 @@
                                     <div class="row mb-3">
                                         <label for="editPromoPrice" class="col-sm-4 col-form-label">Harga Promo</label>
                                         <div class="col-sm-8">
-                                            <input type="number" class="form-control" id="editPromoPrice" value="${rowData.promo_price || ''}" disabled>
+                                            <input type="number" class="form-control" id="editPromoPrice" value="${parseInt(rowData.promo_price) || ''}" disabled>
                                         </div>
                                     </div>
                                     <div class="row mb-3">

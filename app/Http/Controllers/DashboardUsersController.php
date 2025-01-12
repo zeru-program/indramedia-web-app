@@ -58,6 +58,7 @@ class DashboardUsersController extends Controller
             "username" => "required|max:255",
             "phone" => "required|min:10",
             "email" => "required|max:255",
+            "image_path" => "required",
             "gender" => "required|in:laki-laki,perempuan",
             "status_akun" => "required",
             "role" => "required",

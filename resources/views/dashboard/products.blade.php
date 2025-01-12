@@ -21,13 +21,12 @@
             <div class="order">
                 <div class="head d-flex flex-wrap">
                     <h3>Product Indramedia</h3>
-                    @if(session('errors'))
+                    @if (session('import_errors'))
                         <div class="alert alert-danger">
                             <ul>
-                                <li>{{ session($errors) }}</li>
-                                {{-- @foreach(session('errors') as $error)
+                                @foreach (session('import_errors') as $error)
                                     <li>{{ $error }}</li>
-                                @endforeach --}}
+                                @endforeach
                             </ul>
                         </div>
                     @endif
@@ -45,12 +44,16 @@
                         </button>
                         <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
                             data-bs-target="#modalImport">
-                            <i class='bi bi-download'></i>
+                            <i class='bi bi-upload'></i>
                             <span>Import</span>
                         </button>
                         <a class="d-flex align-items-center gap-2 btn bg-accent text-light" href="{{ route('dashboard.products.export') }}">
                             <i class='bi bi-printer-fill'></i>
                             <span>Export</span>
+                        </a>
+                        <a class="d-flex align-items-center gap-2 btn bg-accent text-light" href="{{ route('dashboard.products.template') }}">
+                            <i class='bi bi-download'></i>
+                            <span>Template</span>
                         </a>
                         </div>
                         <div class="d-flex gap-2 align-items-center position-relative">
@@ -456,8 +459,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="d-flex col-6 flex-column">
-                                            <label>Produk Unggulan</label>
-                                            <div class="badge bg-primary">${rowData.is_featured === 'true' ? 'Ya' : 'Tidak'}</div>
+                                            <label>Produk Bisa Upload File</label>
+                                            <div class="badge bg-primary">${rowData.is_onefile == 1 ? 'Ya, Hanya 1 File' : rowData.is_multiplefile == 1 ? 'Ya, Bisa Banyak File' :'Tidak'}</div>
                                         </div>
                                         <div class="d-flex col-6 flex-column">
                                             <label>Produk Promo</label>

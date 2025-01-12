@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class ImportProducts implements ToModel, WithStartRow
 {
     protected $errors = []; // Simpan kesalahan
+    protected $importedCount = 0; // Hitung jumlah produk yang berhasil diimpor
 
     /**
      * Tentukan baris awal data (start row).
@@ -37,17 +38,26 @@ class ImportProducts implements ToModel, WithStartRow
                 Log::info('Skipping empty SKU row: ', $row);
                 return null;
             }
-            
+
             // Periksa apakah SKU sudah ada
-            // $existingProduct = Products::where('sku', $row[1])->first()->sku;
-            // if ($existingProduct) {
-            //     throw new Exception("Duplicate SKU: {$row[1]}");
-            // }
+            $duplicateEntry = Products::where('sku', $row[1])
+                ->first();
+
+            if ($duplicateEntry) {
+                // Simpan error duplikasi
+                $this->errors[] = [
+                    'row' => $row,
+                    'message' => "Duplikat SKU Ditemukan: {$row[1]}",
+                ];
+                return null; // Abaikan baris ini
+            }
+
+            $this->importedCount++;
 
             // Buat produk baru
             return new Products([
                 'sku'           => $row[1],
-                'image_path'    => $row[2] ?? url('/images/new/logo-1.png'),
+                'image_path'    => $row[2] ?? '/images/new/logo-1.png',
                 'name'          => $row[3],
                 'description'   => $row[4],
                 'type'          => strtolower($row[5]),
@@ -65,16 +75,23 @@ class ImportProducts implements ToModel, WithStartRow
                 'status'        => strtolower($row[14]),
             ]);
         } catch (Exception $e) {
-            // dd($e->getMessage());
             Log::error("Error importing row: " . $e->getMessage());
             $this->errors[] = [
                 'row' => $row,
                 'message' => $e->getMessage(),
             ];
-            return null; // Skip this row
+            return null; // Abaikan baris ini
         }
     }
 
+    /**
+     * Dapatkan jumlah produk yang berhasil diimpor.
+     * @return int
+     */
+    public function getImportedCount()
+    {
+        return $this->importedCount;
+    }
     /**
      * Dapatkan kesalahan yang terjadi selama impor.
      * @return array

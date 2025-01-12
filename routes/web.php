@@ -77,6 +77,7 @@ Route::middleware(AdminMiddleware::class)->prefix('dashboard')->group(function()
        Route::delete('/delete/{id}', [DashboardProductsController::class, 'deleteProducts'])->name('dashboard.products.delete');
        Route::post('/import', [DashboardProductsController::class, 'importProducts'])->name('dashboard.products.import');
        Route::get('/export', [DashboardProductsController::class, 'exportProducts'])->name('dashboard.products.export');
+       Route::get('/template', [DashboardProductsController::class, 'downloadTemplateProducts'])->name('dashboard.products.template');
        
        Route::get('/type', [DashboardTypeController::class, 'indexProductsType'])->name('dashboard.products.type');
        Route::post('/type/create', [DashboardTypeController::class, 'postProductsType'])->name('dashboard.products.type.post');

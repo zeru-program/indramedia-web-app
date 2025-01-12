@@ -114,6 +114,7 @@
                                                         <th>Jumlah</th>
                                                         <th>Harga</th>
                                                         <th>Total Harga</th>
+                                                        <th>Upload File</th>
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
@@ -132,7 +133,7 @@
                                             <form action="{{ route('cart.checkout.post') }}" method="POST">
                                                 @csrf
                                                 <div class="row">
-                                                    
+
                                                 </div>
                                                 <button class="btn btn-primary w-100" type="submit">Checkout</button>
                                             </form>
@@ -229,12 +230,24 @@
                         },
                     },
                     {
+                        data: 'file_upload', // Kolom Aksi
+                        name: 'file_upload',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
                         data: 'action', // Kolom Aksi
                         name: 'action',
                         orderable: false,
                         searchable: false
                     }
                 ]
+            });
+
+            $(document).on('click', '.btn-upload-file', function () {
+                const cartId = $(this).data('id');
+                $('#cartId').val(cartId); // Set cart ID in hidden input
+                $('#uploadFileModal').modal('show'); // Show modal
             });
         })
     </script>

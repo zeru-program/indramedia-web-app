@@ -277,6 +277,10 @@ class DashboardProductsController extends Controller
         return Excel::download(new ExportProducts, "rekap-products-indramedia-at" . Carbon::now()->timestamp . ".xlsx");
     }
 
+    public function downloadTemplateProducts() {
+        return response()->download(public_path('/storage/template/import-products-indramedia.xlsx'));
+    }
+
     public function importProducts(Request $request) {
         // dd($request);
         $request->validate([
@@ -296,23 +300,27 @@ class DashboardProductsController extends Controller
     
         // Tangkap kesalahan
         $errors = $import->getErrors();
+        $importedCount = $import->getImportedCount();
 
-        
-        if (!empty($errors)) {
-            // Simpan kesalahan ke session
-            $errorMessages = array_map(function ($error) {
-                return "Error: " . $error['message'];
-            }, $errors);
-            // dd($errorMessages);
-            // dd($errorMessages);
-            return redirect()->back()->with([
-                'success' => "Import berhasil dengan beberapa kesalahan.",
-                // 'errors' => json_encode($errorMessages),
-                'errors' => $errors,
+        if ($importedCount === 0) {
+            return redirect()->back()->withErrors([
+                'error' => 'Semua data SKU dalam file adalah duplikat atau terjadi kesalahan. Tidak ada data yang diimpor.',
             ]);
         }
 
-        return redirect()->back()->with('success', "Berhasil Import Produk!");
+        if (!empty($errors)) {
+            // Simpan kesalahan dalam session dengan format array pesan
+            $errorMessages = array_map(function ($error) {
+                return $error['message'];
+            }, $errors);
+        
+            return redirect()->back()->with([
+                'success' => "Import berhasil dengan beberapa kesalahan.",
+                'import_errors' => $errorMessages, // Bagian ini nanti digunakan di front-end
+            ]);
+        }
+
+        return redirect()->back()->with('success', "{$importedCount} produk berhasil diimpor tanpa kesalahan!");
 
     }
     // products controler

@@ -79,6 +79,19 @@ class CartController extends Controller
                     $findProduct = Products::where('sku', $row->product_sku)->first();
                     return $findProduct ? $findProduct->price * $row->qty : 0;
                 })
+                ->addColumn('file_upload', function ($row) {
+                    // Input file untuk setiap produk
+                    $findProduct = Products::where('sku', $row->product_sku)->first();
+                    if ($findProduct->is_multiplefile) {
+                        $inputs = '<button class="btn btn-primary btn-upload-file my-2">Upload ' . $row->qty . ' file</button>';
+                        return $inputs;
+                    } else if ($findProduct->is_onefile) {
+                        $inputs = '<button class="btn btn-primary btn-upload-file my-2">Upload ' . $row->qty . ' file</button>';
+                        return $inputs;
+                    } else {
+                        return "Tidak Perlu";
+                    }
+                })
                 ->addColumn('action', function ($row) {
                     return '
                         <div class="d-flex gap-2" style="padding-right: 20px">
@@ -89,7 +102,7 @@ class CartController extends Controller
                         </div>
                     ';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['file_upload', 'action'])
                 ->make(true);
         }
         
@@ -98,60 +111,60 @@ class CartController extends Controller
     }
 
     public function cartCheckoutPost(Request $request) {
-        // DB::beginTransaction(); // Mulai transaksi database
+        DB::beginTransaction(); // Mulai transaksi database
 
-        // try {
-        //     $userId = Auth::id();
-        //     $cartItems = Cart::where('user_id', $userId)->get();
+        try {
+            $userId = Auth::id();
+            $cartItems = Cart::where('user_id', $userId)->get();
     
-        //     if ($cartItems->isEmpty()) {
-        //         return back()->with('error', 'Keranjang belanja kosong!');
-        //     }
+            if ($cartItems->isEmpty()) {
+                return back()->with('error', 'Keranjang belanja kosong!');
+            }
     
-        //     // Buat `order_id` baru di tabel `orders`
-        //     $order = Orders::create([
-        //         'order_id' => Str::random(9),
-        //         'user_id' => $userId,
-        //         'total_amount' => $cartItems->sum(function ($item) {
-        //             return $item->qty * $item->product->price; // Hitung total harga
-        //         }),
-        //         'status' => 'pending', // Atur status awal
-        //     ]);
+            // Buat `order_id` baru di tabel `orders`
+            $order = Orders::create([
+                'order_id' => Str::random(9),
+                'user_id' => $userId,
+                'total_amount' => $cartItems->sum(function ($item) {
+                    return $item->qty * $item->product->price; // Hitung total harga
+                }),
+                'status' => 'pending', // Atur status awal
+            ]);
     
-        //     // Iterasi setiap item di keranjang untuk dimasukkan ke `order_items`
-        //     foreach ($cartItems as $cartItem) {
-        //         OrdersItems::create([
-        //             'order_id' => $order->order_id,
-        //             'order_name' => $request->order_name,
-        //             'order_phone' => $request->order_phone,
-        //             'order_message' => $request->order_note,
-        //             'product_sku' => $find->sku,
-        //             'product_name' => $find->name,
-        //             'product_type' => $find->type ?? null,
-        //             'product_category' => $find->category ?? null,
-        //             'product_brand' => $find->brand ?? null,
-        //             'order_is_onefile' => $request->order_is_onefile,
-        //             'order_is_multiplefile' => $request->order_is_multiplefile,
-        //             'product_is_promo' => $find->is_promo ?? 0,
-        //             'product_amount' => $request->order_qty,
-        //             'product_price_unit' => $request->order_price ?? 0,
-        //             'product_price_totals' => ($request->order_price ?? 0) * $request->order_qty * 1.2,
-        //             'product_price_discount' => $find->discount_price ?? null,
-        //             'product_percentage_discount' => $find->percentage_discount ?? null,
-        //             'product_payment_method' => $request->order_payment,
-        //             'product_delivery' => $request->order_delivery,
-        //         ]);
-        //     }
+            // Iterasi setiap item di keranjang untuk dimasukkan ke `order_items`
+            foreach ($cartItems as $cartItem) {
+                OrdersItems::create([
+                    'order_id' => $order->order_id,
+                    'order_name' => $request->order_name,
+                    'order_phone' => $request->order_phone,
+                    'order_message' => $request->order_note,
+                    'product_sku' => $find->sku,
+                    'product_name' => $find->name,
+                    'product_type' => $find->type ?? null,
+                    'product_category' => $find->category ?? null,
+                    'product_brand' => $find->brand ?? null,
+                    'order_is_onefile' => $request->order_is_onefile,
+                    'order_is_multiplefile' => $request->order_is_multiplefile,
+                    'product_is_promo' => $find->is_promo ?? 0,
+                    'product_amount' => $request->order_qty,
+                    'product_price_unit' => $request->order_price ?? 0,
+                    'product_price_totals' => ($request->order_price ?? 0) * $request->order_qty * 1.2,
+                    'product_price_discount' => $find->discount_price ?? null,
+                    'product_percentage_discount' => $find->percentage_discount ?? null,
+                    'product_payment_method' => $request->order_payment,
+                    'product_delivery' => $request->order_delivery,
+                ]);
+            }
     
-        //     // Hapus semua item keranjang yang telah di-checkout
-        //     Cart::where('user_id', $userId)->delete();
+            // Hapus semua item keranjang yang telah di-checkout
+            Cart::where('user_id', $userId)->delete();
     
-        //     DB::commit(); // Simpan semua perubahan
-        //     return redirect()->route('orders.index')->with('success', 'Checkout berhasil!');
-        // } catch (\Exception $e) {
-        //     DB::rollBack(); // Batalkan semua perubahan jika terjadi error
-        //     return back()->with('error', 'Terjadi kesalahan saat checkout: ' . $e->getMessage());
-        // }
+            DB::commit(); // Simpan semua perubahan
+            return redirect()->route('orders.index')->with('success', 'Checkout berhasil!');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Batalkan semua perubahan jika terjadi error
+            return back()->with('error', 'Terjadi kesalahan saat checkout: ' . $e->getMessage());
+        }
 
     }
 

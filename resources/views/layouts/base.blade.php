@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
-    <title>Indramedia Store</title>
+    <link rel="shortcut icon" href="{{ asset('images/new/logo-1.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('images/new/logo-1.png') }}" type="image/x-icon">
+    <title>Indramedia</title>
 	<meta name="description" content="Indramedia Menyediakan Yang Kamu Butuhkan, Bookstore, Digital, Computer, Web Development, Furniture Office & School, Fotografi">
 	<meta name="author" content="Indramedia">
-	<link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
-	<link rel="icon" href="images/logo.png" type="image/x-icon">
 	<!-- # Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

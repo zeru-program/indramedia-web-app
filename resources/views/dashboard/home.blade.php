@@ -58,12 +58,16 @@
                                 <i class='bi bi-plus-lg'></i>
                                 <span>Create</span>
                             </button>
-                            <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
+                           {{-- <button class="d-flex align-items-center gap-2 btn bg-accent text-light" data-bs-toggle="modal"
                                 data-bs-target="#modalFilter">
                                 <i class='bx bx-filter'></i>
                                 <span>Filter</span>
-                            </button>
+                            </button>--}}
                         </div>
+                        <a class="d-flex align-items-center gap-2 btn bg-accent text-light" href="{{ route('dashboard.orders.export') }}">
+                            <i class='bi bi-printer-fill'></i>
+                            <span>Export</span>
+                        </a>
                         <div class="d-flex gap-2 align-items-center position-relative">
                             <input type="text" placeholder="Search by id orders" id="search_order_id"
                                 style="padding-right: 35px" class="form-control">

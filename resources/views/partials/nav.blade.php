@@ -49,7 +49,7 @@
             <!-- if user has login  -->
             @auth
             <li class="nav-item dropdown d-flex">
-              <a class="nav-link text-light position-relative" href="{{ route('cart.checkout') }}">
+             {{-- <a class="nav-link text-light position-relative" href="{{ route('cart.checkout') }}">
                 <i class="bi-cart-fill"></i>
                 <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="bottom: 15px;left: -10x;font-size: 8px">
                   @php
@@ -58,7 +58,7 @@
                   {{ $cartCount > 99 ? '99+' : $cartCount }}
                   <span class="visually-hidden">total keranjang</span>
                 </span>
-              </a>
+              </a> --}}
               <a class="nav-link gap-4 text-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi-person-fill"></i><span style="margin-left:3px">Hai, {{ Auth::user()->username }}</span>
               </a>

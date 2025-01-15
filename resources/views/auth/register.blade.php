@@ -19,7 +19,7 @@
     <main class="w-100 bg-light d-flex justify-content-center py-5 align-items-start">
         <section class="d-flex container-fluid flex-column justify-content-center shadow-sm rounded-2 box-auth" style="background: #FFFFFF">
             <h1 class="text-center fw-b">Register</h1>
-            <span class="text-center mb-4">Indramedia store</span>
+            <span class="text-center mb-4">Indramedia</span>
             <form action="{{ route('register.post') }}" method="post">
                 @csrf
                 <div class="row">

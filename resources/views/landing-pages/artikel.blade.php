@@ -1,7 +1,7 @@
 @extends('layouts.artikel')
 
 @section('meta-title')
-  <title></title>
+  <title>Indramedia Artikel</title>
 @endsection
 
 @section('styles')
@@ -109,8 +109,8 @@
             </div>
             <div class="d-flex contain-artikel mt-3 flex-wrap gap-2" id="searchResults"> 
                 @foreach ($data as $blog)
-                <div class="box-artikel rounded-2 shadow-sm mb-2" onclick="window.location.href = '{{ route('artikel.detail', $blog->slug) }}'">
-                    <div class="overflow-hidden position-relative">
+                <div class="box-artikel rounded-2 shadow-sm mb-2" onclick="window.location.href = '{{ route('artikel.detail', $blog->slug) }}'" style="height: 300px">
+                    <div class="overflow-hidden position-relative contain-img-artikel">
                       <div class="badge bg-success position-absolute top-0" style="z-index: 100;right: 0;width: auto;height: auto">
                         {{ $blog->category }}
                       </div>

@@ -231,7 +231,7 @@
       </div>
     </section>
 
-    <section class="section teams">
+   {{-- <section class="section teams">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12">
@@ -378,6 +378,6 @@
           </div>
         </div>
       </div>
-    </section>
+    </section>  --}}
     </main>
 @endsection

@@ -393,7 +393,7 @@
         {{-- section cta 2 --}}
 
         {{-- section testiomonal --}}
-        <section class="section testimonials overflow-hidden bg-tertiary">
+       {{-- <section class="section testimonials overflow-hidden bg-tertiary">
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-lg-6">
@@ -532,7 +532,7 @@
                 stroke="currentColor" stroke-miterlimit="10" />
             </svg>
           </div>
-        </section>
+        </section> --}}
         {{-- section testiomonal --}}
         
         {{-- section faq --}}
@@ -545,8 +545,8 @@
                   <h1 class=" wow fadeInUp">Pertanyaan yang Sering Diajukan</h1>
                 </div>
               </div>
-              <div class="col-lg-6">
-                <div class="accordion shadow rounded py-5 px-0 px-lg-4 bg-white position-relative wow fadeInUp" data-wow-delay=".5s" id="accordionFAQ">
+              {{--<div class="col-lg-6">
+                 <div class="accordion shadow rounded py-5 px-0 px-lg-4 bg-white position-relative wow fadeInUp" data-wow-delay=".5s" id="accordionFAQ">
                   <div class="accordion-item p-1 mb-2">
                     <h2 class="accordion-header accordion-button h5 border-0 active"
                       id="heading-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" type="button" data-bs-toggle="collapse"
@@ -615,7 +615,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>--}}
               <div class="col-lg-4 mt-4 mt-lg-0 wow fadeInUp" data-wow-delay=".8s">
                 <div class="contact-info shadow rounded py-5 px-4 ms-0 ms-lg-4 bg-white position-relative">
                     <div class="block mt-0">

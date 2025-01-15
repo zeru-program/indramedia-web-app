@@ -24,7 +24,7 @@
         <section class="d-flex container-fluid flex-column justify-content-center shadow-sm rounded-2 box-auth"
             style="background: #FFFFFF">
             <h1 class="text-center fw-b">Login</h1>
-            <span class="text-center mb-4">Indramedia store</span>
+            <span class="text-center mb-4">Indramedia</span>
             <form action="{{ route('login.post') }}" method="post">
                 @csrf
                 <div class="row">

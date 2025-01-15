@@ -47,7 +47,7 @@
                 <li class="list-inline-item text-light"><a href="wa.me/+6282320381992" target="_blank" title="twitter"><i class="fab text-light fa-2x bi-whatsapp"></i></a></li>
                 <li class="list-inline-item text-light"><a href="https://www.instagram.com/bukusekolahan.id" target="_blank" title="instagram"><i class="fab text-light fa-2x bi-instagram"></i></a></li>
                 <li class="list-inline-item text-light"><a href="https://www.youtube.com/@indramediadigital7749" target="_blank" title="pinterest"><i class="fab text-light fa-2x bi-youtube"></i></a></li>
-                <li class="list-inline-item text-light"><a href="" target="_blank" title="shoppe" class="mt-0" ><img style="margin-top: -8px" src="{{ asset("images/shopee.svg") }}" alt=""></a></li>
+                <li class="list-inline-item text-light"><a href="" target="_blank" title="shoppe" class="mt-0" ><img style="margin-top: -15px;width: 30px" src="{{ asset("images/shopee.svg") }}" alt=""></a></li>
               </ul>
             </div>
           </div>
